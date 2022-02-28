@@ -1,38 +1,32 @@
-.App {
-  text-align: center;
+/* html {
+  font-size: 16px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-color: rgb(227, 255, 244);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+header {
+  margin: auto;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+header > h2 {
+  max-width: 70%;
+  margin: auto;
 }
 
-.App-link {
-  color: #61dafb;
+footer {
+  max-width: 70%;
+  margin: auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.device-card-container {
+  max-width: 70%;
+  margin: auto;
+  margin-top: 10rem;
 }
+
+.device-card {
+  max-width: 35%;
+  height: 10rem;
+} */
