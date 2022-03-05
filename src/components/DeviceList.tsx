@@ -5,11 +5,31 @@ import DeviceListElement from "./DeviceListElement";
 export default function DeviceList() {
   return (
     <div className="device-list">
-      <DeviceListElement />
+      <ListGroup>
+        <ListGroup.Item>
+          <DeviceListElement
+            type="Light bulb"
+            name="Bedroom main"
+            connected={false}
+          />
+        </ListGroup.Item>
 
-      <DeviceListElement />
+        <ListGroup.Item>
+          <DeviceListElement
+            type="Electric socket"
+            name="Bedroom main"
+            connected={false}
+          />
+        </ListGroup.Item>
 
-      <DeviceListElement />
+        <ListGroup.Item>
+          <DeviceListElement
+            type="Temperature sensor"
+            name="Bedroom main"
+            connected={false}
+          />
+        </ListGroup.Item>
+      </ListGroup>
     </div>
   );
 }

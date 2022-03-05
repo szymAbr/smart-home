@@ -1,22 +1,27 @@
 import React from "react";
-import { Dropdown } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
+import { CircleFill, Circle } from "react-bootstrap-icons";
 
-export default function DeviceListElement() {
+interface DeviceProps {
+  type: string;
+  name: string;
+  connected: boolean;
+}
+
+export default function DeviceListElement({
+  type,
+  name,
+  connected,
+}: DeviceProps) {
   return (
-    <div className="mt-3">
-      <Dropdown>
-        <Dropdown.Toggle variant="secondary">dropdown toggle</Dropdown.Toggle>
-
-        <Dropdown.Menu variant="dark">
-          <Dropdown.Item href="#/action-1" active>
-            active
-          </Dropdown.Item>
-
-          <Dropdown.Item href="#/action-2">second action</Dropdown.Item>
-
-          <Dropdown.Item href="#/action-3">third action</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+    <div className="device-list-element p-3">
+      <Row>
+        <Col>{type}</Col>
+        <Col className="text-left">{name}</Col>
+        <Col className="text-right">
+          {connected ? <CircleFill /> : <Circle />}
+        </Col>
+      </Row>
     </div>
   );
 }
