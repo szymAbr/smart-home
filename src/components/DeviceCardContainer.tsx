@@ -1,5 +1,5 @@
 import React from "react";
-import DeviceCard from "./DeviceCard";
+import DeviceCard from "./DeviceList";
 
 export default function DeviceCardContainer() {
   return (
