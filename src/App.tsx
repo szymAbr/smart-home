@@ -10,6 +10,17 @@ import { DragDropContext } from "react-beautiful-dnd";
 
 function App() {
   const [selectedId, setSelectedId] = useState("");
+  const [deviceOrder, setDeviceOrder] = useState([]);
+
+  function handleOnDragEnd(result: any) {
+    if (!result.destination) return;
+
+    const items = Array.from(deviceOrder);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setDeviceOrder(items);
+  }
 
   useEffect(() => {
     console.log(selectedId);
@@ -19,12 +30,14 @@ function App() {
     <div className="App">
       <Header />
       <Container>
-        <DragDropContext onDragEnd={() => {}}>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
           <Row className="mt-4">
             <Col xs={12} md={5} lg={4}>
               <DeviceList
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}
+                deviceOrder={deviceOrder}
+                setDeviceOrder={setDeviceOrder}
               />
             </Col>
             <Col xs={12} md={7} lg={8}>

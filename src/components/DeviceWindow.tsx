@@ -30,12 +30,6 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
     fetchSelectedDevice();
   }, [selectedId]);
 
-  useEffect(() => {
-    if (selectedDevice) {
-      console.log(selectedDevice.type);
-    }
-  }, [selectedDevice]);
-
   return (
     <div className="device-window">
       {selectedDevice ? (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import DeviceListElement from "./DeviceListElement";
 import axios from "axios";
-import { Droppable } from "react-beautiful-dnd";
+import { Droppable, Draggable } from "react-beautiful-dnd";
 
 // const apiCall = {
 //   event: "bts:subscribe",
@@ -15,11 +15,15 @@ import { Droppable } from "react-beautiful-dnd";
 interface DeviceListProps {
   selectedId: string | number;
   setSelectedId: any;
+  deviceOrder: any;
+  setDeviceOrder: any;
 }
 
 export default function DeviceList({
   selectedId,
   setSelectedId,
+  deviceOrder,
+  setDeviceOrder,
 }: DeviceListProps) {
   // const [bids, setBids] = useState([0]);
 
@@ -54,6 +58,7 @@ export default function DeviceList({
 
   const [deviceData, setDeviceData] = useState([]);
   const [deviceList, setDeviceList] = useState<any[]>([]);
+  // const [deviceOrder, setDeviceOrder] = useState(deviceData);
 
   function fetchDevices() {
     axios
@@ -69,32 +74,12 @@ export default function DeviceList({
       });
   }
 
-  function getDevices(allDevices: Object[]) {
-    let devices;
-
-    if (deviceData) {
-      devices = allDevices.map((item: any) => {
-        return (
-          <ListGroup.Item key={item.id} onClick={() => setSelectedId(item.id)}>
-            <DeviceListElement
-              type={item.type}
-              name={item.name}
-              connectionState={item.connectionState}
-            />
-          </ListGroup.Item>
-        );
-      });
-
-      setDeviceList(devices);
-    }
-  }
-
   useEffect(() => {
     fetchDevices();
   }, []);
 
   useEffect(() => {
-    getDevices(deviceData);
+    setDeviceOrder(deviceData);
   }, [deviceData]);
 
   return (
@@ -107,7 +92,37 @@ export default function DeviceList({
       </Card>
 
       <div className="device-list">
-        <ListGroup>{deviceList}</ListGroup>
+        <Droppable droppableId="devices">
+          {(provided) => (
+            <ListGroup
+              className="devices"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {deviceOrder.map((item: any, index: any) => {
+                return (
+                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                    {(provided) => (
+                      <ListGroup.Item
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        onClick={() => setSelectedId(item.id)}
+                      >
+                        <DeviceListElement
+                          type={item.type}
+                          name={item.name}
+                          connectionState={item.connectionState}
+                        />
+                      </ListGroup.Item>
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
+            </ListGroup>
+          )}
+        </Droppable>
       </div>
     </div>
   );
