@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import DeviceWindow from "./components/DeviceWindow";
 // import DeviceList from "./components/DeviceList";
 import { Container, Row, Col } from "react-bootstrap";
+import { DragDropContext } from "react-beautiful-dnd";
 
 function App() {
   const [selectedId, setSelectedId] = useState("");
@@ -18,14 +19,19 @@ function App() {
     <div className="App">
       <Header />
       <Container>
-        <Row className="mt-4">
-          <Col xs={12} md={5} lg={4}>
-            <DeviceList selectedId={selectedId} setSelectedId={setSelectedId} />
-          </Col>
-          <Col xs={12} md={7} lg={8}>
-            <DeviceWindow selectedId={selectedId} />
-          </Col>
-        </Row>
+        <DragDropContext onDragEnd={() => {}}>
+          <Row className="mt-4">
+            <Col xs={12} md={5} lg={4}>
+              <DeviceList
+                selectedId={selectedId}
+                setSelectedId={setSelectedId}
+              />
+            </Col>
+            <Col xs={12} md={7} lg={8}>
+              <DeviceWindow selectedId={selectedId} />
+            </Col>
+          </Row>
+        </DragDropContext>
         <Footer />
       </Container>
     </div>

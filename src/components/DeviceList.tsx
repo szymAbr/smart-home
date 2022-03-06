@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import DeviceListElement from "./DeviceListElement";
 import axios from "axios";
+import { Droppable } from "react-beautiful-dnd";
 
 // const apiCall = {
 //   event: "bts:subscribe",
@@ -16,7 +17,10 @@ interface DeviceListProps {
   setSelectedId: any;
 }
 
-export default function DeviceList({ selectedId, setSelectedId }: DeviceListProps) {
+export default function DeviceList({
+  selectedId,
+  setSelectedId,
+}: DeviceListProps) {
   // const [bids, setBids] = useState([0]);
 
   // useEffect(() => {
