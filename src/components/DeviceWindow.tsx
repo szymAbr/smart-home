@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import SmartBulb from "./SmartBulb";
+import SmartOutlet from "./SmartOutlet";
+import SmartTemperatureSensor from "./SmartTemperatureSensor";
 
 interface DeviceProps {
-  type?: string;
-  name?: string;
-  connectionState?: string;
   selectedId?: string | number;
 }
 
 export default function DeviceWindow({ selectedId }: DeviceProps) {
-  const [selectedDevice, setSelectedDevice] = useState<any>([]);
+  const [selectedDevice, setSelectedDevice] = useState<any>(null);
+  const [type, setType] = useState("");
+  const [name, setName] = useState("");
+  const [connectionState, setConnectionState] = useState("");
+  const [component, setComponent] = useState<any>(null);
 
   function fetchSelectedDevice() {
     axios
@@ -26,22 +30,112 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
       });
   }
 
+  function checkType(type: string) {
+    let upperCaseIndexArray = [];
+    let output = "";
+
+    for (let i = 0; i < type.length; i++) {
+      if (type[i] === type[i].toUpperCase()) {
+        upperCaseIndexArray.push(type.indexOf(type[i]));
+      }
+    }
+
+    if (upperCaseIndexArray.length === 0) return type;
+
+    let wordArray = [];
+    let lastIndex = 0;
+
+    for (let i = 0; i <= upperCaseIndexArray.length; i++) {
+      const newWord = type.slice(lastIndex, upperCaseIndexArray[i]);
+      lastIndex = upperCaseIndexArray[i];
+
+      wordArray.push(newWord.toLowerCase());
+    }
+
+    output = wordArray.join(" ");
+
+    return output;
+  }
+
+  function capitalizeName(name: string) {
+    return name[0].toUpperCase() + name.slice(1);
+  }
+
+  function splitName(name: string) {
+    const wordsArray = name.split("-");
+    const fullName = wordsArray.join(" ");
+
+    return fullName;
+  }
+
   useEffect(() => {
     fetchSelectedDevice();
   }, [selectedId]);
+
+  useEffect(() => {
+    if (selectedDevice) {
+      setType(checkType(selectedDevice.type));
+
+      setName(splitName(capitalizeName(selectedDevice.name)));
+
+      if (selectedDevice.connectionState === "poorConnection") {
+        setConnectionState("poor connection");
+      } else {
+        setConnectionState(selectedDevice.connectionState);
+      }
+    }
+  }, [selectedDevice]);
+
+  useEffect(() => {
+    if (selectedDevice) {
+      switch (selectedDevice.type) {
+        case "bulb":
+          setComponent(
+            <SmartBulb
+              isTurnedOn={selectedDevice.isTurnedOn}
+              brightness={selectedDevice.brightness}
+              color={selectedDevice.color}
+            />
+          );
+          break;
+        case "outlet":
+          setComponent(
+            <SmartOutlet
+              isTurnedOn={selectedDevice.isTurnedOn}
+              powerConsumption={selectedDevice.powerConsumption}
+            />
+          );
+          break;
+        case "temperatureSensor":
+          setComponent(
+            <SmartTemperatureSensor
+              isTurnedOn={selectedDevice.isTurnedOn}
+              temperature={selectedDevice.temperature}
+            />
+          );
+          break;
+        default:
+          break;
+      }
+    }
+  }, [selectedDevice]);
 
   return (
     <div className="device-window">
       {selectedDevice ? (
         <Card className="my-3 text-center">
           <Card.Body>
-            <Card.Title className="mb-4">{selectedDevice.type}</Card.Title>
+            <Card.Title className="mb-4">Smart {type}</Card.Title>
 
-            <Card.Text>connection status etc.</Card.Text>
+            <Row>
+              <Col>
+                <Card.Text>Name: {name}</Card.Text>
 
-            <Card.Text>connection status etc.</Card.Text>
+                <Card.Text>Connection state: {connectionState}</Card.Text>
+              </Col>
 
-            <Card.Text>connection status etc.</Card.Text>
+              <Col>{component}</Col>
+            </Row>
           </Card.Body>
         </Card>
       ) : (

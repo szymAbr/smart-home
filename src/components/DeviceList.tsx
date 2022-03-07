@@ -57,7 +57,7 @@ export default function DeviceList({
   // });
 
   const [deviceData, setDeviceData] = useState([]);
-  const [deviceList, setDeviceList] = useState<any[]>([]);
+  // const [deviceList, setDeviceList] = useState<any[]>([]);
   // const [deviceOrder, setDeviceOrder] = useState(deviceData);
 
   function fetchDevices() {
