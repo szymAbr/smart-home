@@ -27,7 +27,7 @@ function App() {
   }, [selectedId]);
 
   return (
-    <div className="App">
+    <div className="app bg-light">
       <Header />
       <Container>
         <DragDropContext onDragEnd={handleOnDragEnd}>

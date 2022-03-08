@@ -83,47 +83,38 @@ export default function DeviceList({
   }, [deviceData]);
 
   return (
-    <div className="device-card">
-      <Card className="mt-3 mb-3">
-        <Card.Body>
-          <Card.Title className="text-center mb-4">Your devices</Card.Title>
-          <Card.Text>{/* <div>{firstBids}</div> */}</Card.Text>
-        </Card.Body>
-      </Card>
-
-      <div className="device-list">
-        <Droppable droppableId="devices">
-          {(provided) => (
-            <ListGroup
-              className="devices"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {deviceOrder.map((item: any, index: any) => {
-                return (
-                  <Draggable key={item.id} draggableId={item.id} index={index}>
-                    {(provided) => (
-                      <ListGroup.Item
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        onClick={() => setSelectedId(item.id)}
-                      >
-                        <DeviceListElement
-                          type={item.type}
-                          name={item.name}
-                          connectionState={item.connectionState}
-                        />
-                      </ListGroup.Item>
-                    )}
-                  </Draggable>
-                );
-              })}
-              {provided.placeholder}
-            </ListGroup>
-          )}
-        </Droppable>
-      </div>
+    <div className="device-list mt-3 mb-3">
+      <Droppable droppableId="devices">
+        {(provided) => (
+          <ListGroup
+            className="devices"
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            {deviceOrder.map((item: any, index: any) => {
+              return (
+                <Draggable key={item.id} draggableId={item.id} index={index}>
+                  {(provided) => (
+                    <ListGroup.Item
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      onClick={() => setSelectedId(item.id)}
+                    >
+                      <DeviceListElement
+                        type={item.type}
+                        name={item.name}
+                        connectionState={item.connectionState}
+                      />
+                    </ListGroup.Item>
+                  )}
+                </Draggable>
+              );
+            })}
+            {provided.placeholder}
+          </ListGroup>
+        )}
+      </Droppable>
     </div>
   );
 }
