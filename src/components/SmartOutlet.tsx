@@ -17,16 +17,12 @@ export default function SmartOutlet({
     <div>
       <Card>
         <Card.Body>
-          {/* <Card.Title className="mb-4">Type: Smart Outlet</Card.Title> */}
-
-          {/* <Card.Text>ID: {id}</Card.Text>
-
-          <Card.Text>NAME: {name}</Card.Text>
-
-          <Card.Text>CONNECTION STATE: {connectionState}</Card.Text> */}
-
           <Card.Text>{isTurnedOn ? "ON" : "OFF"}</Card.Text>
+        </Card.Body>
+      </Card>
 
+      <Card>
+        <Card.Body>
           <Card.Text>POWER CONSUMPTION: {powerConsumption}</Card.Text>
         </Card.Body>
       </Card>

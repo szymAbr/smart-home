@@ -126,12 +126,11 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
         <Card className="my-3 text-center">
           <Card.Body>
             <Card.Title className="mb-4">Smart {type}</Card.Title>
-
             <Row>
               <Col>
-                <Card.Text>Name: {name}</Card.Text>
+                <Card><Card.Body><Card.Text>Name: {name}</Card.Text></Card.Body></Card>
 
-                <Card.Text>Connection state: {connectionState}</Card.Text>
+                <Card><Card.Body><Card.Text>Connection state: {connectionState}</Card.Text></Card.Body></Card>
               </Col>
 
               <Col>{component}</Col>

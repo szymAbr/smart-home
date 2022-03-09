@@ -17,18 +17,12 @@ export default function SmartTemperatureSensor({
     <div>
       <Card>
         <Card.Body>
-          {/* <Card.Title className="mb-4">
-            Type: Smart Temperature Sensor
-          </Card.Title> */}
-
-          {/* <Card.Text>ID: {id}</Card.Text>
-
-          <Card.Text>NAME: {name}</Card.Text>
-
-          <Card.Text>CONNECTION STATE: {connectionState}</Card.Text> */}
-
           <Card.Text>{isTurnedOn ? "ON" : "OFF"}</Card.Text>
+        </Card.Body>
+      </Card>
 
+      <Card>
+        <Card.Body>
           <Card.Text>TEMPERATURE: {temperature}</Card.Text>
         </Card.Body>
       </Card>
