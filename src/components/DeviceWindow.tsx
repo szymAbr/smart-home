@@ -4,6 +4,7 @@ import axios from "axios";
 import SmartBulb from "./SmartBulb";
 import SmartOutlet from "./SmartOutlet";
 import SmartTemperatureSensor from "./SmartTemperatureSensor";
+import DeviceName from "./DeviceName";
 
 interface DeviceProps {
   selectedId?: string | number;
@@ -57,16 +58,16 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
     return output;
   }
 
-  function capitalizeName(name: string) {
-    return name[0].toUpperCase() + name.slice(1);
-  }
+  // function capitalizeName(name: string) {
+  //   return name[0].toUpperCase() + name.slice(1);
+  // }
 
-  function splitName(name: string) {
-    const wordsArray = name.split("-");
-    const fullName = wordsArray.join(" ");
+  // function splitName(name: string) {
+  //   const wordsArray = name.split("-");
+  //   const fullName = wordsArray.join(" ");
 
-    return fullName;
-  }
+  //   return fullName;
+  // }
 
   useEffect(() => {
     fetchSelectedDevice();
@@ -76,7 +77,7 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
     if (selectedDevice) {
       setType(checkType(selectedDevice.type));
 
-      setName(splitName(capitalizeName(selectedDevice.name)));
+      // setName(splitName(capitalizeName(selectedDevice.name)));
 
       if (selectedDevice.connectionState === "poorConnection") {
         setConnectionState("poor connection");
@@ -128,9 +129,21 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
             <Card.Title className="mb-4">Smart {type}</Card.Title>
             <Row>
               <Col>
-                <Card><Card.Body><Card.Text>Name: {name}</Card.Text></Card.Body></Card>
+                {/* <Card><Card.Body><Card.Text>Name: {name}</Card.Text></Card.Body></Card> */}
+                <Card>
+                  <Card.Body>
+                    <Card.Text>
+                      <span>Name: </span>
+                      <DeviceName name={selectedDevice.name} />
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
 
-                <Card><Card.Body><Card.Text>Connection state: {connectionState}</Card.Text></Card.Body></Card>
+                <Card>
+                  <Card.Body>
+                    <Card.Text>Connection state: {connectionState}</Card.Text>
+                  </Card.Body>
+                </Card>
               </Col>
 
               <Col>{component}</Col>
