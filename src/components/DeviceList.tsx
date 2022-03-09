@@ -83,7 +83,7 @@ export default function DeviceList({
   }, [deviceData]);
 
   return (
-    <div className="device-list mt-3 mb-3">
+    <div className="device-list mt-4 py-2 mb-3">
       <Droppable droppableId="devices">
         {(provided) => (
           <ListGroup

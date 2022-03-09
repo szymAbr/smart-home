@@ -1,32 +1,37 @@
-/* html {
+html {
   font-size: 16px;
 }
 
-body {
-  background-color: rgb(227, 255, 244);
+.app {
+  background-color: #c4cdd611;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-header {
-  margin: auto;
+.list-group-item {
+  background-color: #adb5bd11;
 }
 
-header > h2 {
-  max-width: 70%;
-  margin: auto;
+.device-window {
+  background-color: #adb5bd11;
 }
 
-footer {
-  max-width: 70%;
-  margin: auto;
+.icon {
+  color: #17a4c0;
+  font-size: 150%;
 }
 
-.device-card-container {
-  max-width: 70%;
-  margin: auto;
-  margin-top: 10rem;
+.icon-github {
+  color: black;
 }
 
-.device-card {
-  max-width: 35%;
-  height: 10rem;
-} */
+.device-window-container {
+  padding: 25% 0;
+}
+
+footer > p:first-child {
+  margin-top: 1.5rem;
+}
+
+footer > p:nth-child(2) {
+  margin-bottom: 2rem;
+}

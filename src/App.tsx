@@ -27,7 +27,7 @@ function App() {
   }, [selectedId]);
 
   return (
-    <div className="app bg-light">
+    <div className="app justify-content-center">
       <Header />
       <Container>
         <DragDropContext onDragEnd={handleOnDragEnd}>

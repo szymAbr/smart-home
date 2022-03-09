@@ -93,7 +93,6 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
         case "bulb":
           setComponent(
             <SmartBulb
-              isTurnedOn={selectedDevice.isTurnedOn}
               brightness={selectedDevice.brightness}
               color={selectedDevice.color}
             />
@@ -102,7 +101,6 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
         case "outlet":
           setComponent(
             <SmartOutlet
-              isTurnedOn={selectedDevice.isTurnedOn}
               powerConsumption={selectedDevice.powerConsumption}
             />
           );
@@ -110,7 +108,6 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
         case "temperatureSensor":
           setComponent(
             <SmartTemperatureSensor
-              isTurnedOn={selectedDevice.isTurnedOn}
               temperature={selectedDevice.temperature}
             />
           );
@@ -122,15 +119,15 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
   }, [selectedDevice]);
 
   return (
-    <div className="device-window">
+    <div className="device-window-container">
       {selectedDevice ? (
-        <Card className="my-3 text-center">
+        <Card className="my-3 text-center device-window">
           <Card.Body>
-            <Card.Title className="mb-4">Smart {type}</Card.Title>
+            <Card.Title className="my-3">Smart {type}</Card.Title>
             <Row>
               <Col>
                 {/* <Card><Card.Body><Card.Text>Name: {name}</Card.Text></Card.Body></Card> */}
-                <Card>
+                <Card className="my-3 device-info">
                   <Card.Body>
                     <Card.Text>
                       <span>Name: </span>
@@ -139,9 +136,19 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
                   </Card.Body>
                 </Card>
 
-                <Card>
+                <Card className="mb-3 device-info">
                   <Card.Body>
-                    <Card.Text>Connection state: {connectionState}</Card.Text>
+                    <Card.Text>
+                      Connection state: <span>{connectionState}</span>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+
+                <Card className="my-3 device-info">
+                  <Card.Body>
+                    <Card.Text>
+                      Power: {selectedDevice.isTurnedOn ? "ON" : "OFF"}
+                    </Card.Text>
                   </Card.Body>
                 </Card>
               </Col>

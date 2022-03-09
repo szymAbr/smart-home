@@ -59,11 +59,15 @@ export default function DeviceListElement({
   return (
     <div className="device-list-element p-3">
       <Row>
-        <Col>{typeIcon}</Col>
-        <Col className="text-left">
+        <Col xs={4} md={3} className="icon">
+          {typeIcon}
+        </Col>
+        <Col xs={4} md={6} className="text-center">
           <DeviceName name={name} />
         </Col>
-        <Col className="text-right">{connectionIcon}</Col>
+        <Col xs={4} md={3} className="text-right icon">
+          {connectionIcon}
+        </Col>
       </Row>
     </div>
   );

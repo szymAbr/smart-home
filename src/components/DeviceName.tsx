@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "react-bootstrap";
 
 interface DeviceNameProps {
   name: string;
@@ -23,9 +22,5 @@ export default function DeviceName({ name }: DeviceNameProps) {
     setFormattedName(splitName(capitalizeName(name)));
   }, [name]);
 
-  return (
-    <>
-      <span>{formattedName}</span>
-    </>
-  );
+  return <div>{formattedName}</div>;
 }
