@@ -4,7 +4,6 @@ import Header from "./components/Header";
 import DeviceList from "./components/DeviceList";
 import Footer from "./components/Footer";
 import DeviceWindow from "./components/DeviceWindow";
-// import DeviceList from "./components/DeviceList";
 import { Container, Row, Col } from "react-bootstrap";
 import { DragDropContext } from "react-beautiful-dnd";
 

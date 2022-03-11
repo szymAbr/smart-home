@@ -13,7 +13,6 @@ interface DeviceProps {
 export default function DeviceWindow({ selectedId }: DeviceProps) {
   const [selectedDevice, setSelectedDevice] = useState<any>(null);
   const [type, setType] = useState("");
-  const [name, setName] = useState("");
   const [connectionState, setConnectionState] = useState("");
   const [component, setComponent] = useState<any>(null);
 
@@ -58,17 +57,6 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
     return output;
   }
 
-  // function capitalizeName(name: string) {
-  //   return name[0].toUpperCase() + name.slice(1);
-  // }
-
-  // function splitName(name: string) {
-  //   const wordsArray = name.split("-");
-  //   const fullName = wordsArray.join(" ");
-
-  //   return fullName;
-  // }
-
   useEffect(() => {
     fetchSelectedDevice();
   }, [selectedId]);
@@ -76,8 +64,6 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
   useEffect(() => {
     if (selectedDevice) {
       setType(checkType(selectedDevice.type));
-
-      // setName(splitName(capitalizeName(selectedDevice.name)));
 
       if (selectedDevice.connectionState === "poorConnection") {
         setConnectionState("poor connection");

@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Card, ListGroup } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 import DeviceListElement from "./DeviceListElement";
-import axios from "axios";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-
-// const apiCall = {
-//   event: "bts:subscribe",
-//   data: { channel: "order_book_btcusd" },
-// };
-
-// const apiUrl = process.env.REACT_APP_API_URL
-// const apiKey = process.env.REACT_APP_API_KEY;
+import axios from "axios";
 
 interface DeviceListProps {
   selectedId: string | number;
@@ -25,40 +17,7 @@ export default function DeviceList({
   deviceOrder,
   setDeviceOrder,
 }: DeviceListProps) {
-  // const [bids, setBids] = useState([0]);
-
-  // useEffect(() => {
-  //   const ws = new WebSocket("wss://ws.bitstamp.net");
-
-  //   ws.onopen = function (event) {
-  //     ws.send(JSON.stringify(apiCall));
-  //   };
-
-  //   ws.onmessage = function (event) {
-  //     const json = JSON.parse(event.data);
-  //     try {
-  //       if (json.event === "data") {
-  //         setBids(json.data.bids.slice(0, 5));
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-
-  //   return () => ws.close();
-  // });
-
-  // const firstBids = bids.map((item) => {
-  //   return (
-  //     <div key={item}>
-  //       <p>{item}</p>
-  //     </div>
-  //   );
-  // });
-
   const [deviceData, setDeviceData] = useState([]);
-  // const [deviceList, setDeviceList] = useState<any[]>([]);
-  // const [deviceOrder, setDeviceOrder] = useState(deviceData);
 
   function fetchDevices() {
     axios
