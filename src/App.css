@@ -13,6 +13,9 @@ html {
 
 .device-window {
   background-color: #adb5bd11;
+  -webkit-box-shadow: 0px 2px 24px 0px rgba(90, 175, 198, 1);
+  -moz-box-shadow: 0px 2px 24px 0px rgba(90, 175, 198, 1);
+  box-shadow: 0px 2px 24px 0px rgba(90, 175, 198, 1);
 }
 
 .icon {
@@ -34,4 +37,26 @@ footer > p:first-child {
 
 footer > p:nth-child(2) {
   margin-bottom: 2rem;
+}
+
+/* .draggingOver {
+  background-color: lightblue;
+} */
+
+.dragging {
+  -webkit-box-shadow: inset 0px 2px 24px 0px rgba(90, 175, 198, 1);
+  -moz-box-shadow: inset 0px 2px 24px 0px rgba(90, 175, 198, 1);
+  box-shadow: inset 0px 2px 24px 0px rgba(90, 175, 198, 1);
+}
+
+.window-list,
+.param-list {
+  padding: 0 5%;
+}
+
+.window-list .list-group-item,
+.param-item {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
 }
