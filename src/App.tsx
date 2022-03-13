@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import DeviceList from "./components/DeviceList";
@@ -21,29 +21,27 @@ function App() {
     setDeviceOrder(items);
   }
 
-  useEffect(() => {
-    console.log(selectedId);
-  }, [selectedId]);
-
   return (
     <div className="app justify-content-center">
       <Header />
+
       <Container>
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Row className="mt-4">
-            <Col xs={12} md={5} lg={4}>
+        <Row className="mt-4">
+          <Col xs={12} md={5} lg={4}>
+            <DragDropContext onDragEnd={handleOnDragEnd}>
               <DeviceList
-                selectedId={selectedId}
                 setSelectedId={setSelectedId}
                 deviceOrder={deviceOrder}
                 setDeviceOrder={setDeviceOrder}
               />
-            </Col>
-            <Col xs={12} md={7} lg={8}>
-              <DeviceWindow selectedId={selectedId} />
-            </Col>
-          </Row>
-        </DragDropContext>
+            </DragDropContext>
+          </Col>
+
+          <Col xs={12} md={7} lg={8}>
+            <DeviceWindow selectedId={selectedId} />
+          </Col>
+        </Row>
+
         <Footer />
       </Container>
     </div>
