@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { Card, Row, Col } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import axios from "axios";
 import SmartBulb from "./SmartBulb";
 import SmartOutlet from "./SmartOutlet";
 import SmartTemperatureSensor from "./SmartTemperatureSensor";
-import DeviceName from "./DeviceName";
 
 interface DeviceProps {
   selectedId?: string | number;
 }
 
+interface SmartDeviceDetails {
+  type: string;
+  id: string;
+  name: string;
+  connectionState: string;
+  isTurnedOn?: boolean;
+  brightness?: number;
+  color?: string;
+  powerConsumption?: number;
+  temperature?: number;
+}
+
 export default function DeviceWindow({ selectedId }: DeviceProps) {
-  const [selectedDevice, setSelectedDevice] = useState<any>(null);
+  const [selectedDevice, setSelectedDevice] = useState<SmartDeviceDetails>();
   const [type, setType] = useState("");
   const [connectionState, setConnectionState] = useState("");
-  const [component, setComponent] = useState<any>(null);
+  const [paramOrder, setParamOrder] = useState([]);
 
   function fetchSelectedDevice() {
     axios
@@ -57,6 +68,16 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
     return output;
   }
 
+  function handleOnDragEnd(result: any) {
+    if (!result.destination) return;
+
+    const items = Array.from(paramOrder);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setParamOrder(items);
+  }
+
   useEffect(() => {
     fetchSelectedDevice();
   }, [selectedId]);
@@ -73,74 +94,44 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
     }
   }, [selectedDevice]);
 
-  useEffect(() => {
-    if (selectedDevice) {
-      switch (selectedDevice.type) {
-        case "bulb":
-          setComponent(
-            <SmartBulb
-              brightness={selectedDevice.brightness}
-              color={selectedDevice.color}
-            />
-          );
-          break;
-        case "outlet":
-          setComponent(
-            <SmartOutlet
-              powerConsumption={selectedDevice.powerConsumption}
-            />
-          );
-          break;
-        case "temperatureSensor":
-          setComponent(
-            <SmartTemperatureSensor
-              temperature={selectedDevice.temperature}
-            />
-          );
-          break;
-        default:
-          break;
-      }
-    }
-  }, [selectedDevice]);
-
   return (
     <div className="device-window-container">
       {selectedDevice ? (
         <Card className="my-3 text-center device-window">
           <Card.Body>
             <Card.Title className="my-3">Smart {type}</Card.Title>
-            <Row>
-              <Col>
-                {/* <Card><Card.Body><Card.Text>Name: {name}</Card.Text></Card.Body></Card> */}
-                <Card className="my-3 device-info">
-                  <Card.Body>
-                    <Card.Text>
-                      <span>Name: </span>
-                      <DeviceName name={selectedDevice.name} />
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
 
-                <Card className="mb-3 device-info">
-                  <Card.Body>
-                    <Card.Text>
-                      Connection state: <span>{connectionState}</span>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-
-                <Card className="my-3 device-info">
-                  <Card.Body>
-                    <Card.Text>
-                      Power: {selectedDevice.isTurnedOn ? "ON" : "OFF"}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-
-              <Col>{component}</Col>
-            </Row>
+            {selectedDevice.type === "bulb" ? (
+              <SmartBulb
+                name={selectedDevice.name}
+                connectionState={connectionState}
+                isTurnedOn={selectedDevice.isTurnedOn!}
+                brightness={selectedDevice.brightness!}
+                color={selectedDevice.color!}
+                paramOrder={paramOrder}
+                setParamOrder={setParamOrder}
+                handleOnDragEnd={handleOnDragEnd}
+              />
+            ) : selectedDevice.type === "outlet" ? (
+              <SmartOutlet
+                name={selectedDevice.name}
+                connectionState={connectionState}
+                isTurnedOn={selectedDevice.isTurnedOn!}
+                powerConsumption={selectedDevice.powerConsumption!}
+                paramOrder={paramOrder}
+                setParamOrder={setParamOrder}
+                handleOnDragEnd={handleOnDragEnd}
+              />
+            ) : selectedDevice.type === "temperatureSensor" ? (
+              <SmartTemperatureSensor
+                name={selectedDevice.name}
+                connectionState={connectionState}
+                temperature={selectedDevice.temperature!}
+                paramOrder={paramOrder}
+                setParamOrder={setParamOrder}
+                handleOnDragEnd={handleOnDragEnd}
+              />
+            ) : null}
           </Card.Body>
         </Card>
       ) : (
