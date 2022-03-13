@@ -5,21 +5,26 @@ import { Droppable, Draggable } from "react-beautiful-dnd";
 import axios from "axios";
 
 interface DeviceListProps {
-  selectedId: string | number;
   setSelectedId: any;
   deviceOrder: any;
   setDeviceOrder: any;
 }
 
+interface SmartDevice {
+  type: string;
+  id: string;
+  name: string;
+  connectionState: string;
+}
+
 export default function DeviceList({
-  selectedId,
   setSelectedId,
   deviceOrder,
   setDeviceOrder,
 }: DeviceListProps) {
-  const [deviceData, setDeviceData] = useState([]);
+  const [deviceData, setDeviceData] = useState<SmartDevice[]>();
 
-  function fetchDevices() {
+  function fetchDevices(): void {
     axios
       .get("https://my-smart-home-api.herokuapp.com/devices")
       .then((response) => {
@@ -38,23 +43,33 @@ export default function DeviceList({
   }, []);
 
   useEffect(() => {
-    setDeviceOrder(deviceData);
-  }, [deviceData]);
+    if (deviceData) {
+      setDeviceOrder(deviceData);
+    }
+  }, [deviceData, setDeviceOrder]);
 
   return (
     <div className="device-list mt-4 py-2 mb-3">
       <Droppable droppableId="devices">
-        {(provided) => (
+        {(provided, snapshot) => (
           <ListGroup
-            className="devices"
+            className={
+              snapshot.isDraggingOver ? "devices draggingOver" : "devices"
+            }
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            {deviceOrder.map((item: any, index: any) => {
+            {deviceOrder.map((item: any, index: number) => {
               return (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided) => (
+                  {(provided, snapshot) => (
                     <ListGroup.Item
+                      className={
+                        snapshot.isDragging
+                          ? "device-item dragging"
+                          : "device-item"
+                      }
+                      style={provided.draggableProps.style}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
