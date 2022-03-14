@@ -30,6 +30,7 @@ export default function DeviceList({
       .then((response) => {
         const data = response.data;
 
+        console.log("devices fetched!");
         setDeviceData(data);
       })
       .catch((error) => {
@@ -40,6 +41,7 @@ export default function DeviceList({
 
   useEffect(() => {
     fetchDevices();
+    setInterval(fetchDevices, 2500);
   }, []);
 
   useEffect(() => {

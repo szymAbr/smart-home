@@ -6,7 +6,7 @@ import SmartOutlet from "./SmartOutlet";
 import SmartTemperatureSensor from "./SmartTemperatureSensor";
 
 interface DeviceProps {
-  selectedId?: string | number;
+  selectedId?: string;
 }
 
 interface SmartDeviceDetails {
@@ -26,20 +26,41 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
   const [type, setType] = useState("");
   const [connectionState, setConnectionState] = useState("");
   const [paramOrder, setParamOrder] = useState([]);
+  const [currentId, setCurrentId] = useState("");
 
-  function fetchSelectedDevice() {
-    axios
-      .get(`https://my-smart-home-api.herokuapp.com/devices?id=${selectedId}`)
-      .then((response) => {
-        const data = response.data;
+  // function fetchSelectedDevice() {
+  //   axios
+  //     .get(`https://my-smart-home-api.herokuapp.com/devices?id=${selectedId}`)
+  //     .then((response) => {
+  //       const data = response.data;
 
-        setSelectedDevice(data[0]);
-      })
-      .catch((error) => {
-        const errorMsg = error.message;
-        console.log(errorMsg);
-      });
-  }
+  //       console.log("specific device fetched with selectedId!");
+  //       console.log(data[0]);
+  //       setSelectedDevice(data[0]);
+  //     })
+  //     .catch((error) => {
+  //       const errorMsg = error.message;
+  //       console.log(errorMsg);
+  //     });
+  // }
+
+  // function intervalFetch() {
+  //   if (currentId) {
+  //     axios
+  //       .get(`https://my-smart-home-api.herokuapp.com/devices?id=${currentId}`)
+  //       .then((response) => {
+  //         const data = response.data;
+
+  //         console.log("specific device fetched with currentId!");
+  //         console.log(data[0]);
+  //         setSelectedDevice(data[0]);
+  //       })
+  //       .catch((error) => {
+  //         const errorMsg = error.message;
+  //         console.log(errorMsg);
+  //       });
+  //   }
+  // }
 
   function checkType(type: string) {
     let upperCaseIndexArray = [];
@@ -79,8 +100,50 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
   }
 
   useEffect(() => {
-    fetchSelectedDevice();
+    if (selectedId) {
+      axios
+        .get(`https://my-smart-home-api.herokuapp.com/devices?id=${selectedId}`)
+        .then((response) => {
+          const data = response.data;
+
+          console.log("specific device fetched with selectedId!");
+          console.log(data[0]);
+          setSelectedDevice(data[0]);
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+          console.log(errorMsg);
+        });
+
+      setCurrentId(selectedId);
+    }
   }, [selectedId]);
+
+  useEffect(() => {
+    const setIntervalFetch = setInterval(() => {
+      if (currentId) {
+        axios
+          .get(
+            `https://my-smart-home-api.herokuapp.com/devices?id=${currentId}`
+          )
+          .then((response) => {
+            const data = response.data;
+
+            console.log("specific device fetched with currentId!");
+            console.log(data[0]);
+            setSelectedDevice(data[0]);
+          })
+          .catch((error) => {
+            const errorMsg = error.message;
+            console.log(errorMsg);
+          });
+      }
+    }, 2500);
+
+    return () => {
+      clearInterval(setIntervalFetch);
+    };
+  }, [currentId]);
 
   useEffect(() => {
     if (selectedDevice) {
