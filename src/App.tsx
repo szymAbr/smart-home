@@ -5,20 +5,23 @@ import DeviceList from "./components/DeviceList";
 import Footer from "./components/Footer";
 import DeviceWindow from "./components/DeviceWindow";
 import { Container, Row, Col } from "react-bootstrap";
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { SmartDevice } from "./components/DeviceList";
 
 function App() {
   const [selectedId, setSelectedId] = useState("");
-  const [deviceOrder, setDeviceOrder] = useState([]);
+  const [deviceOrder, setDeviceOrder] = useState<SmartDevice[]>([]);
 
-  function handleOnDragEnd(result: any) {
+  function handleOnDragEnd(result: DropResult): void {
     if (!result.destination) return;
 
-    const items = Array.from(deviceOrder);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+    if (deviceOrder) {
+      const items = Array.from(deviceOrder);
+      const [reorderedItem] = items.splice(result.source.index, 1);
+      items.splice(result.destination.index, 0, reorderedItem);
 
-    setDeviceOrder(items);
+      setDeviceOrder(items);
+    }
   }
 
   return (

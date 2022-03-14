@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
-import ParamDragDrop from "./ParamDragDrop";
+import React, { useState, useEffect, SetStateAction, Dispatch } from "react";
+import { DropResult } from "react-beautiful-dnd";
+import ParamDragDrop, { ParamOrder } from "./ParamDragDrop";
 
 interface SmartOutletProps {
   name: string;
   connectionState: string;
   isTurnedOn: boolean;
   powerConsumption: number;
-  paramOrder: any;
-  setParamOrder: any;
-  handleOnDragEnd: any;
+  paramOrder: ParamOrder[];
+  setParamOrder: Dispatch<SetStateAction<ParamOrder[]>>;
+  handleOnDragEnd: (result?: DropResult) => void;
 }
 
 export default function SmartOutlet({
@@ -19,7 +20,7 @@ export default function SmartOutlet({
   paramOrder,
   setParamOrder,
   handleOnDragEnd,
-}: SmartOutletProps) {
+}: SmartOutletProps): JSX.Element {
   const [paramList] = useState([
     {
       id: "0",

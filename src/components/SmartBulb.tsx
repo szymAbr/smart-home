@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import ParamDragDrop from "./ParamDragDrop";
+import React, { useState, useEffect, SetStateAction, Dispatch } from "react";
+import { DropResult } from "react-beautiful-dnd";
+import ParamDragDrop, { ParamOrder } from "./ParamDragDrop";
 
 interface SmartBulbProps {
   name: string;
@@ -7,9 +8,9 @@ interface SmartBulbProps {
   isTurnedOn: boolean;
   brightness: number;
   color: string;
-  paramOrder: any;
-  setParamOrder: any;
-  handleOnDragEnd: any;
+  paramOrder: ParamOrder[];
+  setParamOrder: Dispatch<SetStateAction<ParamOrder[]>>;
+  handleOnDragEnd: (result?: DropResult) => void;
 }
 
 export default function SmartBulb({
@@ -21,7 +22,7 @@ export default function SmartBulb({
   paramOrder,
   setParamOrder,
   handleOnDragEnd,
-}: SmartBulbProps) {
+}: SmartBulbProps): JSX.Element {
   const [paramList] = useState([
     {
       id: "0",

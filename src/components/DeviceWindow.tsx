@@ -4,10 +4,8 @@ import axios from "axios";
 import SmartBulb from "./SmartBulb";
 import SmartOutlet from "./SmartOutlet";
 import SmartTemperatureSensor from "./SmartTemperatureSensor";
-
-interface DeviceProps {
-  selectedId?: string;
-}
+import { DropResult } from "react-beautiful-dnd";
+import { ParamOrder } from "./ParamDragDrop";
 
 interface SmartDeviceDetails {
   type: string;
@@ -21,46 +19,16 @@ interface SmartDeviceDetails {
   temperature?: number;
 }
 
-export default function DeviceWindow({ selectedId }: DeviceProps) {
+export default function DeviceWindow({
+  selectedId,
+}: {
+  selectedId?: string;
+}): JSX.Element {
   const [selectedDevice, setSelectedDevice] = useState<SmartDeviceDetails>();
   const [type, setType] = useState("");
   const [connectionState, setConnectionState] = useState("");
-  const [paramOrder, setParamOrder] = useState([]);
+  const [paramOrder, setParamOrder] = useState<ParamOrder[]>([]);
   const [currentId, setCurrentId] = useState("");
-
-  // function fetchSelectedDevice() {
-  //   axios
-  //     .get(`https://my-smart-home-api.herokuapp.com/devices?id=${selectedId}`)
-  //     .then((response) => {
-  //       const data = response.data;
-
-  //       console.log("specific device fetched with selectedId!");
-  //       console.log(data[0]);
-  //       setSelectedDevice(data[0]);
-  //     })
-  //     .catch((error) => {
-  //       const errorMsg = error.message;
-  //       console.log(errorMsg);
-  //     });
-  // }
-
-  // function intervalFetch() {
-  //   if (currentId) {
-  //     axios
-  //       .get(`https://my-smart-home-api.herokuapp.com/devices?id=${currentId}`)
-  //       .then((response) => {
-  //         const data = response.data;
-
-  //         console.log("specific device fetched with currentId!");
-  //         console.log(data[0]);
-  //         setSelectedDevice(data[0]);
-  //       })
-  //       .catch((error) => {
-  //         const errorMsg = error.message;
-  //         console.log(errorMsg);
-  //       });
-  //   }
-  // }
 
   function checkType(type: string) {
     let upperCaseIndexArray = [];
@@ -89,14 +57,17 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
     return output;
   }
 
-  function handleOnDragEnd(result: any) {
-    if (!result.destination) return;
+  function handleOnDragEnd(result?: DropResult) {
+    if (result) {
+      if (!result.destination) return;
 
-    const items = Array.from(paramOrder);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+      const items = Array.from(paramOrder);
+      const [reorderedItem] = items.splice(result.source.index, 1);
 
-    setParamOrder(items);
+      items.splice(result.destination.index, 0, reorderedItem);
+
+      setParamOrder(items);
+    }
   }
 
   useEffect(() => {
@@ -106,8 +77,6 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
         .then((response) => {
           const data = response.data;
 
-          console.log("specific device fetched with selectedId!");
-          console.log(data[0]);
           setSelectedDevice(data[0]);
         })
         .catch((error) => {
@@ -129,8 +98,6 @@ export default function DeviceWindow({ selectedId }: DeviceProps) {
           .then((response) => {
             const data = response.data;
 
-            console.log("specific device fetched with currentId!");
-            console.log(data[0]);
             setSelectedDevice(data[0]);
           })
           .catch((error) => {

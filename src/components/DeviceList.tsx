@@ -1,16 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { ListGroup } from "react-bootstrap";
 import DeviceListElement from "./DeviceListElement";
-import { Droppable, Draggable } from "react-beautiful-dnd";
+import {
+  Droppable,
+  Draggable,
+  DraggableProvided,
+  DraggableStateSnapshot,
+  DroppableProvided,
+  DroppableStateSnapshot,
+} from "react-beautiful-dnd";
 import axios from "axios";
 
 interface DeviceListProps {
-  setSelectedId: any;
-  deviceOrder: any;
-  setDeviceOrder: any;
+  setSelectedId: Dispatch<SetStateAction<string>>;
+  deviceOrder: SmartDevice[];
+  setDeviceOrder: Dispatch<SetStateAction<SmartDevice[]>>;
 }
 
-interface SmartDevice {
+export interface SmartDevice {
   type: string;
   id: string;
   name: string;
@@ -21,7 +28,7 @@ export default function DeviceList({
   setSelectedId,
   deviceOrder,
   setDeviceOrder,
-}: DeviceListProps) {
+}: DeviceListProps): JSX.Element {
   const [deviceData, setDeviceData] = useState<SmartDevice[]>();
 
   function fetchDevices(): void {
@@ -30,7 +37,6 @@ export default function DeviceList({
       .then((response) => {
         const data = response.data;
 
-        console.log("devices fetched!");
         setDeviceData(data);
       })
       .catch((error) => {
@@ -41,6 +47,7 @@ export default function DeviceList({
 
   useEffect(() => {
     fetchDevices();
+    
     setInterval(fetchDevices, 2500);
   }, []);
 
@@ -53,7 +60,7 @@ export default function DeviceList({
   return (
     <div className="device-list mt-4 py-2 mb-3">
       <Droppable droppableId="devices">
-        {(provided, snapshot) => (
+        {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
           <ListGroup
             className={
               snapshot.isDraggingOver ? "devices draggingOver" : "devices"
@@ -64,7 +71,10 @@ export default function DeviceList({
             {deviceOrder.map((item: any, index: number) => {
               return (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
+                  {(
+                    provided: DraggableProvided,
+                    snapshot: DraggableStateSnapshot
+                  ) => (
                     <ListGroup.Item
                       className={
                         snapshot.isDragging

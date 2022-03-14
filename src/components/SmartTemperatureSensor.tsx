@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
-import ParamDragDrop from "./ParamDragDrop";
+import React, { useState, useEffect, SetStateAction, Dispatch } from "react";
+import { DropResult } from "react-beautiful-dnd";
+import ParamDragDrop, { ParamOrder } from "./ParamDragDrop";
 
 interface SmartTemperatureSensorProps {
   name: string;
   connectionState: string;
   temperature: number;
-  paramOrder: any;
-  setParamOrder: any;
-  handleOnDragEnd: any;
+  paramOrder: ParamOrder[];
+  setParamOrder: Dispatch<SetStateAction<ParamOrder[]>>;
+  handleOnDragEnd: (result?: DropResult) => void;
 }
 
 export default function SmartTemperatureSensor({
@@ -17,7 +18,7 @@ export default function SmartTemperatureSensor({
   paramOrder,
   setParamOrder,
   handleOnDragEnd,
-}: SmartTemperatureSensorProps) {
+}: SmartTemperatureSensorProps): JSX.Element {
   const [paramList] = useState([
     {
       id: "0",

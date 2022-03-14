@@ -1,7 +1,7 @@
 import React from "react";
 import { Github } from "react-bootstrap-icons";
 
-export default function Footer() {
+export default function Footer(): JSX.Element {
   return (
     <footer className="d-flex flex-column align-items-center mt-5 border-top">
       <p>Author: Szymon Abramowski</p>

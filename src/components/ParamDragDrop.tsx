@@ -1,21 +1,35 @@
 import React from "react";
 import { ListGroup } from "react-bootstrap";
 import DeviceName from "./DeviceName";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DroppableProvided,
+  DroppableStateSnapshot,
+  DraggableProvided,
+  DraggableStateSnapshot,
+} from "react-beautiful-dnd";
+
+export interface ParamOrder {
+  id: string;
+  paramName: string;
+  paramValue: string | boolean | number;
+}
 
 interface ParamDragDropProps {
-  paramOrder: any;
-  handleOnDragEnd: any;
+  paramOrder: ParamOrder[];
+  handleOnDragEnd: () => void;
 }
 
 export default function ParamDragDrop({
   paramOrder,
   handleOnDragEnd,
-}: ParamDragDropProps) {
+}: ParamDragDropProps): JSX.Element {
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId="device-params">
-        {(provided, snapshot) => (
+        {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
           <ListGroup
             className={
               snapshot.isDraggingOver ? "param-list draggingOver" : "param-list"
@@ -23,10 +37,13 @@ export default function ParamDragDrop({
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            {paramOrder.map((item: any, index: number) => {
+            {paramOrder.map((item: ParamOrder, index: number) => {
               return (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
+                  {(
+                    provided: DraggableProvided,
+                    snapshot: DraggableStateSnapshot
+                  ) => (
                     <ListGroup.Item
                       className={
                         snapshot.isDragging
@@ -41,7 +58,8 @@ export default function ParamDragDrop({
                       <span>{item.paramName}: </span>
 
                       <span>
-                        {item.paramName === "Name" ? (
+                        {item.paramName === "Name" &&
+                        typeof item.paramValue === "string" ? (
                           <DeviceName name={item.paramValue} />
                         ) : (
                           item.paramValue

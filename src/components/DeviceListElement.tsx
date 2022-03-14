@@ -21,7 +21,7 @@ export default function DeviceListElement({
   type,
   name,
   connectionState,
-}: DeviceProps) {
+}: DeviceProps): JSX.Element {
   const [connectionIcon, setConnectionIcon] = useState<Icon>();
   const [typeIcon, setTypeIcon] = useState<Icon>();
 
@@ -53,6 +53,7 @@ export default function DeviceListElement({
     }
 
     setConnectionIcon(checkConnection);
+
     setTypeIcon(checkType);
   }, [connectionState, type]);
 

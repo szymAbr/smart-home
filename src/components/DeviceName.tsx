@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-interface DeviceNameProps {
+type DeviceNameProp = {
   name: string;
-}
+};
 
-export default function DeviceName({ name }: DeviceNameProps) {
+export default function DeviceName({ name }: DeviceNameProp): JSX.Element {
   const [formattedName, setFormattedName] = useState("");
 
   function capitalizeName(name: string) {
