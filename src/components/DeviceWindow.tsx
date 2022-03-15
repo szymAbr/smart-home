@@ -31,7 +31,7 @@ export default function DeviceWindow({
   const [currentId, setCurrentId] = useState("");
   const baseURL = "https://my-smart-home-api.herokuapp.com/devices";
 
-  function checkType(type: string) {
+  function checkType(type: string): string {
     let upperCaseIndexArray = [];
     let output = "";
 
@@ -71,7 +71,8 @@ export default function DeviceWindow({
     }
   }
 
-  function handleClick() {
+  // function for the connection toggle button
+  function handleClick(): void {
     if (selectedDevice) {
       if (selectedDevice.connectionState !== "disconnected") {
         axios.put(`${baseURL}/${selectedId}`, {
@@ -116,6 +117,7 @@ export default function DeviceWindow({
     }
   }, [selectedId]);
 
+  // initiate periodic API requests
   useEffect(() => {
     const setIntervalFetch = setInterval(() => {
       if (currentId) {

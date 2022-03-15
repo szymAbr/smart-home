@@ -33,6 +33,7 @@ export default function ParamDragDrop({
       const uniqueParams = document.getElementsByClassName("unique-params");
       const uniqueParamsArray = Array.from(uniqueParams);
 
+      // hide device-specific paramValue if disconnected
       if (value === "disconnected") {
         uniqueParamsArray.forEach((param) => {
           param.classList.add("hidden");
