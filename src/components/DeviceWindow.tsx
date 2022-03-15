@@ -57,7 +57,7 @@ export default function DeviceWindow({
     return output;
   }
 
-  function handleOnDragEnd(result?: DropResult) {
+  function handleOnDragEnd(result?: DropResult): void {
     if (result) {
       if (!result.destination) return;
 

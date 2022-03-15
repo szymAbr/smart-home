@@ -1,4 +1,5 @@
 import React from "react";
+import { CircleFill } from "react-bootstrap-icons";
 import { ListGroup } from "react-bootstrap";
 import DeviceName from "./DeviceName";
 import {
@@ -57,14 +58,24 @@ export default function ParamDragDrop({
                     >
                       <span>{item.paramName}: </span>
 
-                      <span>
-                        {item.paramName === "Name" &&
-                        typeof item.paramValue === "string" ? (
-                          <DeviceName name={item.paramValue} />
-                        ) : (
-                          item.paramValue
-                        )}
-                      </span>
+                      {item.paramName === "Name" &&
+                      typeof item.paramValue === "string" ? (
+                        <DeviceName name={item.paramValue} />
+                      ) : item.paramName === "Temperature" ? (
+                        <span>{item.paramValue}&#8451;</span>
+                      ) : item.paramName === "Power consumption" ? (
+                        <span>{item.paramValue} W</span>
+                      ) : item.paramName === "Color" ? (
+                        <span>
+                          <CircleFill
+                            className="color-circle"
+                            style={{ color: `${item.paramValue}` }}
+                          />{" "}
+                          {item.paramValue}
+                        </span>
+                      ) : (
+                        item.paramValue
+                      )}
                     </ListGroup.Item>
                   )}
                 </Draggable>

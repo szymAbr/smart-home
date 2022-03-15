@@ -29,7 +29,7 @@ export default function SmartOutlet({
     },
     {
       id: "1",
-      paramName: "Connection state",
+      paramName: "State",
       paramValue: "",
     },
     {

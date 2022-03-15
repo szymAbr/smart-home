@@ -63,7 +63,7 @@ export default function DeviceListElement({
         <Col xs={4} md={3} className="icon">
           {typeIcon}
         </Col>
-        <Col xs={4} md={6} className="text-center">
+        <Col xs={4} md={6} className="text-center list-name-col">
           <DeviceName name={name} />
         </Col>
         <Col xs={4} md={3} className="text-right icon">

@@ -11,6 +11,10 @@ html {
   background-color: #adb5bd11;
 }
 
+.device-list .list-group-item:hover {
+  cursor: pointer;
+}
+
 .device-window {
   background-color: #adb5bd11;
   -webkit-box-shadow: 0px 2px 24px 0px rgba(90, 175, 198, 1);
@@ -39,10 +43,6 @@ footer > p:nth-child(2) {
   margin-bottom: 2rem;
 }
 
-/* .draggingOver {
-  background-color: lightblue;
-} */
-
 .dragging {
   -webkit-box-shadow: inset 0px 2px 24px 0px rgba(90, 175, 198, 1);
   -moz-box-shadow: inset 0px 2px 24px 0px rgba(90, 175, 198, 1);
@@ -54,9 +54,50 @@ footer > p:nth-child(2) {
   padding: 0 5%;
 }
 
+.param-list {
+  margin-bottom: 2rem;
+}
+
 .window-list .list-group-item,
 .param-item {
   background-color: #fff;
   display: flex;
   justify-content: space-between;
 }
+
+@media only screen and (min-width: 1200px) {
+  .param-item {
+    width: 85%;
+    margin: auto;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .param-item {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.color-circle {
+  padding-bottom: 0.25rem;
+  font-size: 1.5rem;
+}
+
+.list-name-col {
+  padding-top: 0rem;
+}
+
+@media only screen and (min-width: 508px) and (max-width: 768px) {
+  .list-name-col {
+    padding-top: 0.4rem;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .list-name-col {
+    padding-top: 0.5rem;
+  }
+}
+
+/* @media only screen and (min-width: 1200px) */

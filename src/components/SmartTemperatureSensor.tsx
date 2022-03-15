@@ -27,7 +27,7 @@ export default function SmartTemperatureSensor({
     },
     {
       id: "1",
-      paramName: "Connection state",
+      paramName: "State",
       paramValue: "",
     },
     {

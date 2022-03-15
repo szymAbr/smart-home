@@ -31,7 +31,7 @@ export default function SmartBulb({
     },
     {
       id: "1",
-      paramName: "Connection state",
+      paramName: "State",
       paramValue: "",
     },
     {
@@ -58,7 +58,7 @@ export default function SmartBulb({
     updatedParamList[0].paramValue = name;
     updatedParamList[1].paramValue = connectionState;
     updatedParamList[2].paramValue = powerString;
-    updatedParamList[3].paramValue = brightness;
+    updatedParamList[3].paramValue = brightness + "/100";
     updatedParamList[4].paramValue = color;
 
     setParamOrder(updatedParamList);
