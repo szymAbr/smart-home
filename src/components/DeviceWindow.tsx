@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import axios from "axios";
 import SmartBulb from "./SmartBulb";
 import SmartOutlet from "./SmartOutlet";
@@ -29,6 +29,7 @@ export default function DeviceWindow({
   const [connectionState, setConnectionState] = useState("");
   const [paramOrder, setParamOrder] = useState<ParamOrder[]>([]);
   const [currentId, setCurrentId] = useState("");
+  const baseURL = "https://my-smart-home-api.herokuapp.com/devices";
 
   function checkType(type: string) {
     let upperCaseIndexArray = [];
@@ -70,10 +71,37 @@ export default function DeviceWindow({
     }
   }
 
+  function handleClick() {
+    if (selectedDevice) {
+      if (selectedDevice.connectionState !== "disconnected") {
+        axios.put(`${baseURL}/${selectedId}`, {
+          ...selectedDevice,
+          connectionState: "disconnected",
+        });
+      } else {
+        if (
+          selectedDevice.name === "bathroom-main" ||
+          selectedDevice.name === "AC-outlet" ||
+          selectedDevice.name === "bathroom-main"
+        ) {
+          axios.put(`${baseURL}/${selectedId}`, {
+            ...selectedDevice,
+            connectionState: "poorConnection",
+          });
+        } else {
+          axios.put(`${baseURL}/${selectedId}`, {
+            ...selectedDevice,
+            connectionState: "connected",
+          });
+        }
+      }
+    }
+  }
+
   useEffect(() => {
     if (selectedId) {
       axios
-        .get(`https://my-smart-home-api.herokuapp.com/devices?id=${selectedId}`)
+        .get(`${baseURL}?id=${selectedId}`)
         .then((response) => {
           const data = response.data;
 
@@ -92,9 +120,7 @@ export default function DeviceWindow({
     const setIntervalFetch = setInterval(() => {
       if (currentId) {
         axios
-          .get(
-            `https://my-smart-home-api.herokuapp.com/devices?id=${currentId}`
-          )
+          .get(`${baseURL}?id=${currentId}`)
           .then((response) => {
             const data = response.data;
 
@@ -105,7 +131,7 @@ export default function DeviceWindow({
             console.log(errorMsg);
           });
       }
-    }, 2500);
+    }, 2000);
 
     return () => {
       clearInterval(setIntervalFetch);
@@ -162,6 +188,14 @@ export default function DeviceWindow({
                 handleOnDragEnd={handleOnDragEnd}
               />
             ) : null}
+
+            <Button
+              variant="secondary"
+              className="btn-sm"
+              onClick={() => handleClick()}
+            >
+              Toggle connection state
+            </Button>
           </Card.Body>
         </Card>
       ) : (

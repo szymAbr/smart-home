@@ -36,7 +36,7 @@ export default function DeviceList({
   useEffect(() => {
     fetchDevices();
 
-    setInterval(fetchDevices, 2500);
+    setInterval(fetchDevices, 2000);
   }, []);
 
   return (

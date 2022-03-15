@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CircleFill } from "react-bootstrap-icons";
 import { ListGroup } from "react-bootstrap";
 import DeviceName from "./DeviceName";
@@ -27,6 +27,24 @@ export default function ParamDragDrop({
   paramOrder,
   handleOnDragEnd,
 }: ParamDragDropProps): JSX.Element {
+  useEffect(() => {
+    for (let param in paramOrder) {
+      const value = paramOrder[param].paramValue;
+      const uniqueParams = document.getElementsByClassName("unique-params");
+      const uniqueParamsArray = Array.from(uniqueParams);
+
+      if (value === "disconnected") {
+        uniqueParamsArray.forEach((param) => {
+          param.classList.add("hidden");
+        });
+      } else if (value === "connected" || value === "poor connection") {
+        uniqueParamsArray.forEach((param) => {
+          param.classList.remove("hidden");
+        });
+      }
+    }
+  }, [paramOrder]);
+
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId="device-params">
@@ -62,17 +80,25 @@ export default function ParamDragDrop({
                       typeof item.paramValue === "string" ? (
                         <DeviceName name={item.paramValue} />
                       ) : item.paramName === "Temperature" ? (
-                        <span>{item.paramValue}&#8451;</span>
+                        <span className="unique-params">
+                          {item.paramValue}&#8451;
+                        </span>
                       ) : item.paramName === "Power consumption" ? (
-                        <span>{item.paramValue} W</span>
+                        <span className="unique-params">
+                          {item.paramValue} W
+                        </span>
                       ) : item.paramName === "Color" ? (
-                        <span>
+                        <span className="unique-params">
                           <CircleFill
                             className="color-circle"
                             style={{ color: `${item.paramValue}` }}
                           />{" "}
                           {item.paramValue}
                         </span>
+                      ) : item.paramName === "Power" ? (
+                        <span className="unique-params">{item.paramValue}</span>
+                      ) : item.paramName === "Brightness" ? (
+                        <span className="unique-params">{item.paramValue}</span>
                       ) : (
                         item.paramValue
                       )}
