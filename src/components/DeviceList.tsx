@@ -33,6 +33,14 @@ export default function DeviceList({
       });
   }
 
+  function chooseDevice(id: string) {
+    setSelectedId(id);
+
+    if (window.innerWidth < 768) {
+      document.getElementById("device-window")?.scrollIntoView();
+    }
+  }
+
   useEffect(() => {
     fetchDevices();
 
@@ -47,7 +55,7 @@ export default function DeviceList({
             <ListGroup.Item
               key={item.id}
               className="device-item"
-              onClick={() => setSelectedId(item.id)}
+              onClick={() => chooseDevice(item.id)}
             >
               <DeviceListElement
                 type={item.type}

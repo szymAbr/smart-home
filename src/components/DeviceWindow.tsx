@@ -155,7 +155,7 @@ export default function DeviceWindow({
   return (
     <div className="device-window-container">
       {selectedDevice ? (
-        <Card className="my-3 text-center device-window">
+        <Card id="device-window" className="my-3 text-center device-window">
           <Card.Body>
             <Card.Title className="my-3">Smart {type}</Card.Title>
 
