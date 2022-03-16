@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import {
   Icon,
   Wifi,
-  Wifi2,
+  Wifi1,
   WifiOff,
   LightbulbFill,
   Outlet,
@@ -33,7 +33,7 @@ export default function DeviceListElement({
         case "disconnected":
           return <WifiOff />;
         case "poorConnection":
-          return <Wifi2 />;
+          return <Wifi1 />;
         default:
           return null;
       }
