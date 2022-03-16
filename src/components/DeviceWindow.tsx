@@ -108,6 +108,11 @@ export default function DeviceWindow({
 
           setSelectedDevice(data[0]);
         })
+        .then(() => {
+          if (window.innerWidth < 768) {
+            document.getElementById("device-window")?.scrollIntoView();
+          }
+        })
         .catch((error) => {
           const errorMsg = error.message;
           console.log(errorMsg);
