@@ -1,4 +1,4 @@
-[Smart Home](https://my-smart-home-project.herokuapp.com/)
+# [Smart Home](https://my-smart-home-project.herokuapp.com/)
 
 ## Summary
 
